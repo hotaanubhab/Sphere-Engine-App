@@ -22,9 +22,17 @@ mongoose.connect(dbURI, {useNewUrlParser:true,useUnifiedTopology:true})
 //view engine
 app.set('view engine','ejs')
 
+// define access parameters
+var accessToken = env.ACCESS_TOKEN;
+var endpoint = env.PROBLEMS_API;
+
 //middleware
 app.use(express.static('public'));
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
 app.use(morgan('dev'));
+
+//routes
+app.get('/',(req,res)=>{
+    res.render('index');
+})
