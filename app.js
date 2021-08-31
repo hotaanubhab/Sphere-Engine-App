@@ -36,3 +36,48 @@ app.use(morgan('dev'));
 app.get('/',(req,res)=>{
     res.render('index');
 })
+
+app.get('/problems',(req,res)=>{
+    res.render('problems');
+})
+
+app.get('/submit',(req,res)=>{
+    res.render('submit');
+})
+
+app.get('/create',(req,res)=>{
+    res.render('create');
+})
+app.post('/create',(req,res)=>{
+    var problemData = {
+        name: req.body.name,
+        masterjudgeId: req.body.masterjudgeId
+    };
+    
+    // send request
+    request({
+        url: 'https://' + endpoint + '/api/v4/problems?access_token=' + accessToken,
+        method: 'POST',
+        form: problemData
+    }, function (error, response, body) {
+        
+        if (error) {
+            console.log('Connection problem');
+        }
+        
+        // process response
+        if (response) {
+            if (response.statusCode === 201) {
+                console.log(JSON.parse(response.body)); // problem data in JSON
+            } else {
+                if (response.statusCode === 401) {
+                    console.log('Invalid access token');
+                } else if (response.statusCode === 400) {
+                    var body = JSON.parse(response.body);
+                    console.log('Error code: ' + body.error_code + ', details available in the message: ' + body.message)
+                }
+            }
+        }
+    });
+    res.render('create');
+})
