@@ -76,3 +76,67 @@ a {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
   }
+
+  #editing, #highlighting {
+    /* Both elements need the same text and space styling so they are directly on top of each other */
+    margin: 10px;
+    padding: 10px;
+    border: 0;
+    width: calc(50%);
+    height: 80%;
+  }
+  #editing, #highlighting, #highlighting * {
+    /* Also add text styles to highlighing tokens */
+    font-size: 12pt;
+    font-family: monospace;
+    line-height: 20pt;
+  }
+  
+  
+  #editing, #highlighting {
+    /* In the same place */
+    position: absolute;
+    top: 85px;
+    left: 600px;
+  }
+  
+  
+  /* Move the textarea in front of the result */
+  
+  #editing {
+    z-index: 1;
+  }
+  #highlighting {
+    z-index: 0;
+  }
+  
+  
+  /* Make textarea almost completely transparent */
+  
+  #editing {
+    color: transparent;
+    background: transparent;
+    caret-color: white; /* Or choose your favourite color */
+  }
+  
+  /* Can be scrolled */
+  #editing, #highlighting {
+    overflow: auto;
+    white-space: nowrap; /* Allows textarea to scroll horizontally */
+  }
+  
+  /* No resize on textarea */
+  #editing {
+    resize: none;
+  }
+  
+  /* Paragraphs; First Image */
+  * {
+    font-family: "Fira Code", monospace;
+  }
+  p code {
+    border-radius: 2px;
+    background-color: #eee;
+    color: #111;
+  }
+  

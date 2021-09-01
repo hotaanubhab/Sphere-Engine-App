@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/styles.css">
+    <link href="/prism.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
@@ -24,33 +25,89 @@
     </div>
 </nav>
 <body>
-    <div style="float:left">
+    <div style="float:left;margin-left: 20px;width:40%">
         <%=prob.name %> <br>Code : <%=prob.code %><br>
     <div class="desc">
         <%-html %>    
     </div><br>
     </div>
-    <div style="float:left;margin-left: 100px;">
+    <div style="float:right;margin-right: 300px;">
     Submit Solution :
     <form action="/submit" method="post">
-        Language: <select name="compilerId" id="">
+        Language: <select name="compilerId" id="" onchange="updatelint(this)">
             <% langs.forEach(function(e){ %>
-            <option value=<%=e.id%>><%=e.name %></option>
+            <option data-lint="<%= e.highlighters.prism %>" value=<%=e.id%> <%if(e.id==44){ %>selected<% }%>><%=e.name %></option>
             <% }) %>
-        </select><br>
-        <textarea name="source" id="" cols="70" rows="30">
+        </select>
+        <input type="submit">
+        <div style="height: 200px;">
+            <textarea placeholder="Enter Source Code" name="source" id="editing" spellcheck="false" oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);" onkeydown="check_tab(this, event);">
 #include<bits/stdc++.h>
 using namespace std;
 
 int main() {
-	// your code goes here
-	return 0;
+    // your code goes here
+    return 0;
 }
+            </textarea>
+            <pre id="highlighting" aria-hidden="true">
+<code class="language-cpp" id="highlighting-content">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+                
+int main() {
+    // your code goes here
+    return 0;
+}
+            </code>
+            </pre>
+            </div>
 
         </textarea><br>
         <input type="hidden" name="problemId" value=<%=problemId %>>
-        <input type="submit">
+ 
     </form>
     </div>
+    <script>
+        function updatelint(selected) {
+            console.log(selected.options[selected.selectedIndex].dataset.lint);
+            document.getElementById("highlighting-content").className = `language-${selected.options[selected.selectedIndex].dataset.lint}`;
+        }
+        function update(text) {
+        let result_element = document.querySelector("#highlighting-content");
+        // Handle final newlines (see article)
+        if(text[text.length-1] == "\n") {
+            text += " ";
+        }
+        // Update code
+        result_element.innerHTML = text.replace(new RegExp("&", "g"), "&amp;").replace(new RegExp("<", "g"), "&lt;"); /* Global RegExp */
+        // Syntax Highlight
+        Prism.highlightElement(result_element);
+        }
+
+        function sync_scroll(element) {
+        /* Scroll result to scroll coords of event - sync with textarea */
+        let result_element = document.querySelector("#highlighting");
+        // Get and set x and y
+        result_element.scrollTop = element.scrollTop;
+        result_element.scrollLeft = element.scrollLeft;
+        }
+
+        function check_tab(element, event) {
+        let code = element.value;
+        if(event.key == "Tab") {
+            /* Tab key pressed */
+            event.preventDefault(); // stop normal
+            let before_tab = code.slice(0, element.selectionStart); // text before tab
+            let after_tab = code.slice(element.selectionEnd, element.value.length); // text after tab
+            let cursor_pos = element.selectionEnd + 2; // after tab placed, where cursor moves to - 2 for 2 spaces
+            element.value = before_tab + "  " + after_tab; // add tab char - 2 spaces
+            // move cursor
+            element.selectionStart = cursor_pos;
+            element.selectionEnd = cursor_pos;
+            update(element.value); // Update text to include indent
+        }
+        }
+    </script>
+    <script src="/prism.js"></script>
 </body>
 </html>
