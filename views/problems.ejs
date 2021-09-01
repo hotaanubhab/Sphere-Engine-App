@@ -8,10 +8,12 @@
 </head>
 <body>
     <% probs.forEach(function(e){ %>
+        <a href="/submit/<%=e.id%>">
         <div class="prob">
             <h1><%=e.name%></h1>
             <h2>Code :<%= e.code %></h2>
         </div>
+        </a>>
     <% }) %>
 </body>
 </html>

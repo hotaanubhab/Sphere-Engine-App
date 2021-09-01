@@ -7,12 +7,20 @@
     <title>Document</title>
 </head>
 <body>
-    Name<br>
-    Code : CODE
+    <form action="/edit" method="post">
+    Name : <input type="text" name="name" value="<%= prob.name%>"><br>
+    Code : <%= prob.code%>
     <br>
-    Body
+    <input type="hidden" name="id" value="<%= prob.id%>">
+    <textarea name="body" id="" cols="80" rows="30"><%= prob.body%></textarea>
+    
+    <input type="submit" value="Update">
+    </form>
+    <form action="/delete/<%= prob.id%>">
+        <input type="submit" value="Delete">
+    </form>
     <br>
-    <form action="/testcase">
+    <form action="/testcase/<%= prob.id%>">
     <input type="submit" value="Add TestCase">
     </form>
 </body>

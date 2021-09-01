@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const Prob = require('./models/prob')
 const request = require('request');
 var favicon = require('serve-favicon');
+var showdown  = require('showdown');
+var converter = new showdown.Converter();
 
 //app
 const app = express();
@@ -34,11 +36,19 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //routes
-app.get('/',(req,res)=>{
-    res.render('index');
+app.get('/admin',async (req,res)=>{
+    await Prob.find()
+    .then((result)=>{
+        console.log(result);
+       res.render('index',{probs:result});
+    })
+    .catch((err)=>{
+        console.log(err);
+    });
+
 })
 
-app.get('/problems',async (req,res)=>{
+app.get('/',async (req,res)=>{
     await Prob.find()
         .then((result)=>{
             console.log(result);
@@ -84,7 +94,8 @@ request({
                 if (resp) {
                     if (resp.statusCode === 200) {
                         prob=JSON.parse(resp.body); // problem data in JSON
-                        res.render('submit',{langs:JSON.parse(response.body).items,problemId:req.params.id,prob:prob});
+                        html = converter.makeHtml(prob.body)
+                        res.render('submit',{langs:JSON.parse(response.body).items,problemId:req.params.id,prob:prob,html:html});
                     } else {
                         if (resp.statusCode === 401) {
                             console.log('Invalid access token');
@@ -154,7 +165,7 @@ request({
                         }
                     }
                 });
-             }, 6000);
+             },8000);
             
         } else {
             if (response.statusCode === 401) {
@@ -171,8 +182,38 @@ request({
 })
 
 
-app.get('/details',(req,res)=>{
-    res.render('details');
+app.get('/details/:id',(req,res)=>{
+    // define request parameters
+var problemId = req.params.id;
+
+// send request
+request({
+    
+    url: 'https://' + endpoint + '/api/v4/problems/' + problemId + '?access_token=' + accessToken,
+    method: 'GET'
+}, function (error, response, body) {
+    
+    if (error) {
+        console.log('Connection problem');
+    }
+    
+    // process response
+    if (response) {
+        if (response.statusCode === 200) {
+            //console.log(JSON.parse(response.body)); // problem data in JSON
+            res.render('details',{prob:JSON.parse(response.body)});
+        } else {
+            if (response.statusCode === 401) {
+                console.log('Invalid access token');
+            } else if (response.statusCode === 403) {
+                console.log('Access denied');
+            } else if (response.statusCode === 404) {
+                console.log('Problem not found');
+            }
+        }
+    }
+});
+   
 })
 
 //Create question routes
@@ -206,7 +247,7 @@ app.post('/create',(req,res)=>{
                 const prob = new Prob({name:req.body.name,id:pdata.id,code:pdata.code});
                 prob.save()
                     .then((result)=>{
-                        res.render('create');
+                        res.redirect(`/details/${pdata.id}`)
                     })
                     .catch((err)=>{
                         console.log(err);
@@ -226,8 +267,8 @@ app.post('/create',(req,res)=>{
 
 //Add Testcase Routes
 
-app.get('/testcase',(req,res)=>{
-    res.render('testcase');
+app.get('/testcase/:id',(req,res)=>{
+    res.render('testcase',{id:req.params.id});
 })
 app.post('/testcase',(req,res)=>{
     // define request parameters
@@ -255,6 +296,7 @@ request({
     if (response) {
         if (response.statusCode === 201) {
             console.log(JSON.parse(response.body)); // testcase data in JSON
+            res.redirect(`/testcase/${req.body.id}`);
         }
         else {
             if (response.statusCode === 401) {
@@ -270,5 +312,82 @@ request({
         }
     }
 });
-    res.redirect('/testcase');
+})
+
+app.post('/edit',(req,res) => {
+    // define request parameters
+var problemId = req.body.id;
+var problemData = {
+    name: req.body.name,
+    body: req.body.body,
+};
+
+// send request
+request({
+    url: 'https://' + endpoint + '/api/v4/problems/' + problemId +  '?access_token=' + accessToken,
+    method: 'PUT',
+    form: problemData
+}, function (error, response, body) {
+    
+    if (error) {
+        console.log('Connection problem');
+    }
+    
+    // process response
+    if (response) {
+        if (response.statusCode === 200) {
+            console.log('Problem updated');
+            res.redirect(`/details/${req.body.id}`)
+        } else {
+            if (response.statusCode === 401) {
+                console.log('Invalid access token');
+            } else if (response.statusCode === 403) {
+                console.log('Access denied');
+            } else if (response.statusCode === 404) {
+                console.log('Problem does not exist');
+            } else if (response.statusCode === 400) {
+                var body = JSON.parse(response.body);
+                console.log('Error code: ' + body.error_code + ', details available in the message: ' + body.message)
+            }
+        }
+    }
+});
+})
+
+app.get('/delete/:id',(req,res)=>{
+    // define request parameters
+var problemId = req.params.id;
+
+// send request
+Prob.deleteOne({ id: req.params.id })
+.then((result)=>{
+    request({   
+        url: 'https://' + endpoint + '/api/v4/problems/' + problemId + '?access_token=' + accessToken,
+        method: 'DELETE'
+    }, function (error, response, body) {
+        
+        if (error) {
+            console.log('Connection problem');
+        }
+        
+        // process response
+        if (response) {
+            if (response.statusCode === 200) {
+                console.log('Problem deleted');
+                res.redirect('/problems');
+            } else {
+                if (response.statusCode === 401) {
+                    console.log('Invalid access token');
+                } else if (response.statusCode === 403) {
+                    console.log('Access denied');
+                } else if (response.statusCode === 404) {
+                    console.log('Problem not found');
+                }
+            }
+        }
+    });    
+})
+.catch((err)=>{
+    console.log(err);
+});
 })

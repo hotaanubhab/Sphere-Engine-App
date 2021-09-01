@@ -7,9 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    Testcase 1 :<br>
-    Testcase 2 : <br> 
-    Testcase 3 : <br>
     Add Test Case : <br>
     <form action="/testcase" method="post">
         Input
@@ -18,7 +15,7 @@
         <textarea name="output" id="" cols="30" rows="10"></textarea><br>
         timeLimit
         <input type="number" name="timeLimit" min="0" oninput="validity.valid||(value='');">
-        <input type="hidden" value="75123" name="id">
+        <input type="hidden" value=<%= id%> name="id">
         <input type="submit">
     </form>
 </body>

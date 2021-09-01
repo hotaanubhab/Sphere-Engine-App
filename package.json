@@ -23,6 +23,7 @@
     "mongoose": "^6.0.3",
     "morgan": "^1.10.0",
     "request": "^2.88.2",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "showdown": "^1.9.1"
   }
 }

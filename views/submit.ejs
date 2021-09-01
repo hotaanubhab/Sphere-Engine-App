@@ -8,20 +8,20 @@
 </head>
 <body>
     <div style="float:left">
-        <%=prob.name %> Code : <%=prob.code %><br>
+        <%=prob.name %> <br>Code : <%=prob.code %><br>
     <div class="desc">
-        <%=prob.body %>    
+        <%-html %>    
     </div><br>
     </div>
-    <div style="float:right">
-    Status : Accepted
+    <div style="float:left;margin-left: 100px;">
+    Submit Solution :
     <form action="/submit" method="post">
-        <select name="compilerId" id="">
+        Language: <select name="compilerId" id="">
             <% langs.forEach(function(e){ %>
             <option value=<%=e.id%>><%=e.name %></option>
             <% }) %>
         </select><br>
-        <textarea name="source" id="" cols="30" rows="10">
+        <textarea name="source" id="" cols="70" rows="30">
 
         </textarea><br>
         <input type="hidden" name="problemId" value=<%=problemId %>>
