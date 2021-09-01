@@ -3,9 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<nav id="topbar">
+    <div class="brand-image">
+        <span style="color: #6aa0ff;">Sphere</span><span style="color: #db3236;">Engine</span>
+    </div>
+    <div class="navbar">
+        <ul>
+            <li><a href="/" class="active">Solve</a></li>
+            <li><a href="/admin" >Admin</a></li>
+            <li><a href="/create">Add</a></li>
+            <li>
+                <%if(!user){%><a href="/login">Login</a>
+                <% } else {%><a href="/logout">Logout</a><%}%>
+            </li>
+        </ul>
+    </div>
+</nav>
 <body>
     <h2>Create Problem :</h2>
     <form action="/create" method="post">

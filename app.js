@@ -69,7 +69,10 @@ app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
-
+app.use((req, res, next) => {
+  res.locals.path = req.path;
+  next();
+});
 app.get('*', checkUser);
 
 //routes
@@ -98,7 +101,7 @@ app.post('/login',async (req,res)=>{
 })
 
 
-app.get('/admin',async (req,res)=>{
+app.get('/admin',requireAuth,async (req,res)=>{
     await Prob.find()
     .then((result)=>{
         console.log(result);
@@ -227,7 +230,7 @@ request({
                         }
                     }
                 });
-             },8000);
+             },10000);
             
         } else {
             if (response.statusCode === 401) {
@@ -244,7 +247,7 @@ request({
 })
 
 
-app.get('/details/:id',(req,res)=>{
+app.get('/details/:id',requireAuth,(req,res)=>{
     // define request parameters
 var problemId = req.params.id;
 
@@ -280,10 +283,10 @@ request({
 
 //Create question routes
 
-app.get('/create',(req,res)=>{
+app.get('/create',requireAuth,(req,res)=>{
     res.render('create');
 })
-app.post('/create',(req,res)=>{
+app.post('/create',requireAuth,(req,res)=>{
     var problemData = {
         name: req.body.name,
         masterjudgeId: req.body.masterjudgeId,
@@ -329,10 +332,10 @@ app.post('/create',(req,res)=>{
 
 //Add Testcase Routes
 
-app.get('/testcase/:id',(req,res)=>{
+app.get('/testcase/:id',requireAuth,(req,res)=>{
     res.render('testcase',{id:req.params.id});
 })
-app.post('/testcase',(req,res)=>{
+app.post('/testcase',requireAuth,(req,res)=>{
     // define request parameters
 var problemId = req.body.id;
 var testcaseData = {
@@ -358,7 +361,7 @@ request({
     if (response) {
         if (response.statusCode === 201) {
             console.log(JSON.parse(response.body)); // testcase data in JSON
-            res.redirect(`/testcase/${req.body.id}`);
+            res.redirect(`/details/${req.body.id}`);
         }
         else {
             if (response.statusCode === 401) {
@@ -376,7 +379,7 @@ request({
 });
 })
 
-app.post('/edit',(req,res) => {
+app.post('/edit',requireAuth,(req,res) => {
     // define request parameters
 var problemId = req.body.id;
 var problemData = {
@@ -416,7 +419,7 @@ request({
 });
 })
 
-app.get('/delete/:id',(req,res)=>{
+app.get('/delete/:id',requireAuth,(req,res)=>{
     // define request parameters
 var problemId = req.params.id;
 
@@ -436,7 +439,7 @@ Prob.deleteOne({ id: req.params.id })
         if (response) {
             if (response.statusCode === 200) {
                 console.log('Problem deleted');
-                res.redirect('/problems');
+                res.redirect('/');
             } else {
                 if (response.statusCode === 401) {
                     console.log('Invalid access token');
