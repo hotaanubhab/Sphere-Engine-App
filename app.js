@@ -3,9 +3,13 @@ const env = require("./environment.js");
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Prob = require('./models/prob')
+const Prob = require('./models/prob');
+const User = require('./models/User');
 const request = require('request');
 var favicon = require('serve-favicon');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 var showdown  = require('showdown');
 var converter = new showdown.Converter();
 
@@ -28,14 +32,72 @@ app.set('view engine','ejs')
 // define access parameters
 var accessToken = env.ACCESS_TOKEN;
 var endpoint = env.PROBLEMS_API;
+var secret = env.SECRET;
+
+const handleErrors = (err) => {
+    console.log(err.message, err.code);
+    let errors = { uname: '', password: '' };
+  
+    // incorrect uname
+    if (err.message === 'incorrect username') {
+      errors.uname = 'That username is not registered';
+    }
+  
+    // incorrect password
+    if (err.message === 'incorrect password') {
+      errors.password = 'That password is incorrect';
+    }
+  
+    // validation errors
+    if (err.message.includes('user validation failed')) {
+      // console.log(err);
+      Object.values(err.errors).forEach(({ properties }) => {
+        // console.log(val);
+        // console.log(properties);
+        errors[properties.path] = properties.message;
+      });
+    }
+}
+
+const createToken = (id) => {
+    return jwt.sign({ id }, secret);
+  };
 
 //middleware
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cookieParser());
+
+app.get('*', checkUser);
 
 //routes
+app.get('/login',(req,res)=>{
+    res.render('login')
+});
+
+app.get('/logout',(req,res)=>{
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
+});
+app.post('/login',async (req,res)=>{
+    const { uname, password } = req.body;
+
+  try {
+    const user = await User.login(uname, password);
+    const token = createToken(user._id);
+    res.cookie('jwt', token, { httpOnly: true});
+    res.status(200).json({ user: user._id });
+  } 
+  catch (err) {
+    const errors = handleErrors(err);
+    res.status(400).json({ errors });
+  }
+
+})
+
+
 app.get('/admin',async (req,res)=>{
     await Prob.find()
     .then((result)=>{

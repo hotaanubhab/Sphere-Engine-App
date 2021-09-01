@@ -16,19 +16,27 @@
             <li><a href="/" class="active">Solve</a></li>
             <li><a href="/admin" >Admin</a></li>
             <li><a href="/create">Add</a></li>
-            <li><a href="/login">Login</a></li>
+            <li>
+                <%if(!user){%><a href="/login">Login</a>
+                <% } else {%><a href="/logout">Logout</a><%}%>
+            </li>
         </ul>
     </div>
 </nav>
 <body>
+<div class="grid">
 
+    
     <% probs.forEach(function(e){ %>
-        <a href="/details/<%=e.id%>">
+        <a class="gcard" href="/details/<%=e.id%>">
         <div class="prob">
             <h1><%=e.name%></h1>
             <h2>Code :<%= e.code %></h2>
         </div>
-        </a>>
+        </a>
+        
     <% }) %>
+    
+</div>
 </body>
 </html>

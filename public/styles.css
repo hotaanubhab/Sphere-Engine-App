@@ -48,3 +48,31 @@ nav ul li a.active{
     color :#add8e6;
     border-bottom: 1px solid #add8e6;;
 }
+
+
+.grid
+{
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    /* gap: 1rem; */
+    align-items: center;
+
+}
+.gcard
+{
+  background-color: rgb(184, 28, 62);
+  width: 90%;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px 5% 20px 5%;
+  display: block;
+  color: white;
+  text-align: center;
+
+}
+
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+  }
