@@ -7,20 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    Name                                       Code : CODE<br>
+    <div style="float:left">
+        <%=prob.name %> Code : <%=prob.code %><br>
     <div class="desc">
-        body    
+        <%=prob.body %>    
     </div><br>
+    </div>
+    <div style="float:right">
     Submit Solution :
-    <form action="">
-        <select name="" id="">
-            <option value="">C</option>
-            <option value="">C++</option>
+    <form action="/submit" method="post">
+        <select name="compilerId" id="">
+            <% langs.forEach(function(e){ %>
+            <option value=<%=e.id%>><%=e.name %></option>
+            <% }) %>
         </select><br>
-        <textarea name="" id="" cols="30" rows="10">
+        <textarea name="source" id="" cols="30" rows="10">
 
         </textarea><br>
+        <input type="hidden" name="problemId" value=<%=problemId %>>
         <input type="submit">
     </form>
+    </div>
 </body>
 </html>

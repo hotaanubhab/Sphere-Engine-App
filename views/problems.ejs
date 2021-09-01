@@ -7,9 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="prob">
-        <h1>NAME</h1>
-        <h2>Code : CODE</h2>
-    </div>
+    <% probs.forEach(function(e){ %>
+        <div class="prob">
+            <h1><%=e.name%></h1>
+            <h2>Code :<%= e.code %></h2>
+        </div>
+    <% }) %>
 </body>
 </html>
