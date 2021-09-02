@@ -106,10 +106,16 @@ Deployed using [Heroku](https://sphereengine.herokuapp.com/)
     node app.js
   
   ***
+    After getting the API Keys and endpoints please specify the following in a .env file in the root directory.<br>
+    MONGO_URI = "" // Mongo cluster URI****
+    PROBLEMS_API = "" // Endpoint from Sphere Engine Dashboard<br>
+    ACCESS_TOKEN = "" // Acess token from Sphere Engine Dashboard<br>
+    SECRET = "" // A string used to sign the JWT for verification , it can be any string but shouldn't be shared outside organization to prevent unauthorized access.
   
 ## How To Use
   
   The landing page consists of 4 main parts- 'Solve'  , 'Admin' , 'Add' and 'Login':
+  On the solve page participants cant select the problem they want to solve.
   
   
   <p align='center'><img src=screenshots\1.PNG>
@@ -117,22 +123,23 @@ Deployed using [Heroku](https://sphereengine.herokuapp.com/)
 
   
 
-  
+  On the submit page of every question there is supprt for all the compilers by Sphere Engine API and the participant can submit his solution in prgramming language of choice.
   
   <p align='center'><img src=screenshots\6.PNG>
 <p align="center">
   
+  Admin login is for protected routes like Add or Admin Panel for editing and deleting problems.This is done using JWT. For testing on Heroku server one can use Username : admin , Password : admin as a credential.
   
   <p align='center'><img src=screenshots\2.PNG>
 <p align="center">
   
-  
+  Admin Panel
   <p align='center'><img src=screenshots\3.PNG>
 <p align="center">
-
+Edit Page of a Problem. After edit press update or use this page to go to add test case of that problem , or delete problem.
   <p align='center'><img src=screenshots\4.PNG>
 <p align="center">
-
+Page used to add input output test cases for the problem.
   <p align='center'><img src=screenshots\5.PNG>
 <p align="center">
   
