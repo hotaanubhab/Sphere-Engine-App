@@ -139,6 +139,21 @@ input[type=submit]:hover{
 
 }
 
+.status{
+  margin-left: 20px;
+  display: block;
+  background: rgb(42,82,190);
+    background: linear-gradient(90deg, rgba(42,82,190,1) 0%, rgba(219,50,85,1) 65%);
+    color:azure;
+    width: 150px;
+    border-radius:10px;
+    height:20px;
+    padding:5%;
+    position: absolute;
+    top: 35%;
+    left: 38%;
+}
+
 a {
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
