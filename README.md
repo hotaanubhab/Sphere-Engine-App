@@ -106,10 +106,10 @@ Deployed using [Heroku](https://sphereengine.herokuapp.com/)
     node app.js
   
   ***
-    After getting the API Keys and endpoints please specify the following in a .env file in the root directory.<br>
-    MONGO_URI = "" // Mongo cluster URI****
-    PROBLEMS_API = "" // Endpoint from Sphere Engine Dashboard<br>
-    ACCESS_TOKEN = "" // Acess token from Sphere Engine Dashboard<br>
+    After getting the API Keys and endpoints please specify the following in a .env file in the root directory.
+    MONGO_URI = "" // Mongo cluster URI
+    PROBLEMS_API = "" // Endpoint from Sphere Engine Dashboard
+    ACCESS_TOKEN = "" // Acess token from Sphere Engine Dashboard
     SECRET = "" // A string used to sign the JWT for verification , it can be any string but shouldn't be shared outside organization to prevent unauthorized access.
   
 ## How To Use
