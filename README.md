@@ -46,7 +46,7 @@ SphereEngine is a web application built with Sphere Engine Problems API to creat
 ### Built With
 
 * [Node.js](https://nodejs.org/en/)
-* [Three.js](https://threejs.org)
+* [Prism.js](https://prismjs.com/)
 * [Express.js](https://expressjs.com)
 * [MongoDB](https://www.mongodb.com/cloud)
 * [Sphere Engine API](https://sphere-engine.com/)
