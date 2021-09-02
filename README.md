@@ -68,7 +68,7 @@ SphereEngine is a web application built with Sphere Engine Problems API to creat
 
 [![forthebadge](https://img.shields.io/badge/click-link-lightgrey)](https://forthebadge.com)
   
-Deployed using [Heroku]() 
+Deployed using [Heroku](https://sphereengine.herokuapp.com/) 
 
 ***
 
@@ -78,7 +78,7 @@ Deployed using [Heroku]()
   Go to [official Node.js website](https://nodejs.org/) and download the installer.
   
 * Sphere API key-
-  Go to [Google Maps Platform](https://developers.google.com/maps) to get your free API key.
+  Go to [Sphere Engine Platform](https://sphere-engine.com/) to get your free API key.
   
 * MongoDB url-
   Visit [MongoDB](https://www.mongodb.com/) 
@@ -93,8 +93,8 @@ Deployed using [Heroku]()
 
 ### Installation
 
-    $ git clone https://github.com/hotaanubhab/Sportify-Daedarus-Hack-2021.git
-    $ cd Sportify-Daedarus-Hack-2021.
+    $ git clone https://github.com/hotaanubhab/Sphere-Engine-App.git
+    $ cd Sphere-Engine-App
     $ npm install
     
 
