@@ -13,8 +13,8 @@
     </div>
     <div class="navbar">
         <ul>
-            <li><a href="/" class="active">Solve</a></li>
-            <li><a href="/admin" >Admin</a></li>
+            <li><a href="/" >Solve</a></li>
+            <li><a href="/admin" class="active">Admin</a></li>
             <li><a href="/create">Add</a></li>
             <li>
                 <%if(!user){%><a href="/login">Login</a>
@@ -27,14 +27,15 @@
 <div class="grid">
     <% probs.forEach(function(e){ %>
         <a class="gcard" href="/details/<%=e.id%>">
-        <div class="prob">
-            <h1><%=e.name%></h1>
-            <h2>Code :<%= e.code %></h2>
+        <h3 class="prob" style="margin-left: 20px">
+            <%=e.name%>
+        </h3>
+        <div class="pcode" style="margin-left: 20px">
+        Code :<%= e.code %>
         </div>
+        <button class="solve-btn">Edit</button>
         </a>
-        
     <% }) %>
-    
 </div>
 </body>
 </html>

@@ -1,8 +1,16 @@
+:root {
+  --input-border: azure;
+  --input-focus-h: 245;
+  --input-focus-s: 100%;
+  --input-focus-l: 42%;
+}
+
 body{
     font-family: Google Sans,Roboto,Helvetica Neue,sans-serif;
     margin: 0;
     padding-top: 50px;
     height: 100%;
+    background-color:#e2e2e1;
 }
 nav{
     position: fixed;
@@ -50,25 +58,84 @@ nav ul li a.active{
 }
 
 
-.grid
+/* .grid
 {
 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    /* gap: 1rem; */
     align-items: center;
 
+} */
+.solve-btn{
+  margin: 10px 5% 10px 90%;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border-width: 2px;
+  border-style: solid;
+  border-color:azure;
+  color: rgb(42,82,190);
+  font-size: 15px;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
+
+.solve-btn:hover{
+  background-color:rgb(42,82,190);
+  color:azure;
+}
+
+.input {
+  font-size: 16px;
+  font-size: max(16px, 1em);
+  font-family: inherit;
+  padding: 0.25em 0.5em;
+  background-color: #fff;
+  border: 2px solid var(--input-border);
+  border-radius: 4px;
+  transition: 180ms box-shadow ease-in-out;
+}
+
+.input:not(textarea) {
+  line-height: 1;
+  height: 2.25em;
+}
+
+.input:focus {
+  border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+  box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) +
+  40%), 0.8);
+  outline: 3px solid transparent;
+}
+
+input[type=submit]{
+  padding: 10px 20px;
+  border-radius: 6px;
+  border-width: 2px;
+  border-style: solid;
+  border-color:azure;
+  color: rgb(42,82,190);
+  font-size: 15px;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+input[type=submit]:hover{
+  background-color:rgb(42,82,190);
+  color:azure;
+}
+
 .gcard
 {
-  background-color: rgb(184, 28, 62);
+  background: rgb(42,82,190);
+  background: linear-gradient(90deg, rgba(42,82,190,1) 0%, rgba(219,50,85,1) 65%);
   width: 90%;
   border-radius: 10px;
   padding: 10px;
-  margin: 20px 5% 20px 5%;
+  margin: 10px 5% 10px 5%;
   display: block;
   color: white;
-  text-align: center;
 
 }
 

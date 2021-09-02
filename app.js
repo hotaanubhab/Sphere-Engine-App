@@ -386,6 +386,7 @@ var problemData = {
     name: req.body.name,
     body: req.body.body,
 };
+console.log(req.body.id);
 
 // send request
 request({

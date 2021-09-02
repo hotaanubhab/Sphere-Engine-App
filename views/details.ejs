@@ -13,7 +13,7 @@
     </div>
     <div class="navbar">
         <ul>
-            <li><a href="/" class="active">Solve</a></li>
+            <li><a href="/">Solve</a></li>
             <li><a href="/admin" >Admin</a></li>
             <li><a href="/create">Add</a></li>
             <li>
@@ -24,15 +24,19 @@
     </div>
 </nav>
 <body>
-    <form action="/edit" method="post">
-    Name : <input type="text" name="name" value="<%= prob.name%>"><br>
+    <form action="/edit" method="post" style="margin-top: 10px">
+        <div style="margin-left:20px;float:left">
+    Name : <input class="input" type="text" name="name" value="<%= prob.name%>"><br><br>
     Code : <%= prob.code%>
-    <br>
-    <input type="hidden" name="id" value="<%= prob.id%>">
-    <textarea name="body" id="" cols="80" rows="30"><%= prob.body%></textarea>
-    
+    <br><br>
     <input type="submit" value="Update">
+
+    </div>
+    <input type="hidden" name="id" value=<%=prob.id%>>
+    <textarea class="input" style="float: right;margin-right: 40px;" name="body" id="" cols="80" rows="28"><%= prob.body%></textarea>
     </form>
+    <br><br><br><br><br><br><br><br><br>
+    <div style="margin-left:20px;float:left">
     <form action="/delete/<%= prob.id%>">
         <input type="submit" value="Delete">
     </form>
@@ -40,5 +44,6 @@
     <form action="/testcase/<%= prob.id%>">
     <input type="submit" value="Add TestCase">
     </form>
+</div>
 </body>
 </html>

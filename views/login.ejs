@@ -16,11 +16,11 @@
       </div>
       <div class="navbar">
           <ul>
-              <li><a href="/" class="active">Solve</a></li>
+              <li><a href="/" >Solve</a></li>
               <li><a href="/admin" >Admin</a></li>
               <li><a href="/create">Add</a></li>
               <li>
-                  <%if(!user){%><a href="/login">Login</a>
+                  <%if(!user){%><a href="/login" class="active">Login</a>
                   <% } else {%><a href="/logout">Logout</a><%}%>
               </li>
           </ul>

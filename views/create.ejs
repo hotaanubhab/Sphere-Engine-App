@@ -13,9 +13,9 @@
     </div>
     <div class="navbar">
         <ul>
-            <li><a href="/" class="active">Solve</a></li>
+            <li><a href="/" >Solve</a></li>
             <li><a href="/admin" >Admin</a></li>
-            <li><a href="/create">Add</a></li>
+            <li><a href="/create" class="active">Add</a></li>
             <li>
                 <%if(!user){%><a href="/login">Login</a>
                 <% } else {%><a href="/logout">Logout</a><%}%>
@@ -24,11 +24,15 @@
     </div>
 </nav>
 <body>
-    <h2>Create Problem :</h2>
+    <h2 style="margin-left: 20px;">Create Problem :</h2>
     <form action="/create" method="post">
-        Name : <input type="text" name = "name"><br>
-
-        <textarea name="body" id="" cols="80" rows="30">
+        <div style="float:left;margin-left: 20px;">
+            <label for="text-input">Name :</label><input type="text" class="input" name = "name">
+        <input type="hidden" name="masterjudgeId" value="1001">
+        <input type="submit" style="margin-left: 20px">
+        </div>
+        <div style="float:right;margin-right:40px">
+        <textarea name="body" class="input" id="" cols="80" rows="25" >
 Problem text... 
 
 ### Input 
@@ -44,9 +48,8 @@ etc.
 
 **Output:** 
 etc. 
-        </textarea><br>
-        <input type="hidden" name="masterjudgeId" value="1001">
-        <input type="submit">
+        </textarea>
+    </div>
     </form>
 </body>
 </html>

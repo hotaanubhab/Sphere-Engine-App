@@ -13,7 +13,7 @@
     </div>
     <div class="navbar">
         <ul>
-            <li><a href="/" class="active">Solve</a></li>
+            <li><a href="/">Solve</a></li>
             <li><a href="/admin" >Admin</a></li>
             <li><a href="/create">Add</a></li>
             <li>
@@ -24,14 +24,14 @@
     </div>
 </nav>
 <body>
-    Add Test Case : <br>
-    <form action="/testcase" method="post">
+    <form action="/testcase" method="post" style="margin-left: 20px;">
+        Add Test Case : <br><br>
         Input
-        <textarea name="input" id="" cols="30" rows="10"></textarea>
+        <textarea name="input" class="input" id="" cols="30" rows="10"></textarea>
         Output
-        <textarea name="output" id="" cols="30" rows="10"></textarea><br>
+        <textarea name="output" class="input" id="" cols="30" rows="10"></textarea><br><br>
         timeLimit
-        <input type="number" name="timeLimit" min="0" oninput="validity.valid||(value='');">
+        <input type="number" class="input" name="timeLimit" min="0" oninput="validity.valid||(value='');">
         <input type="hidden" value=<%= id%> name="id">
         <input type="submit">
     </form>

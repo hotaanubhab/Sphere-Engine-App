@@ -27,10 +27,13 @@
     <div class="grid">
     <% probs.forEach(function(e){ %>
         <a class="gcard" href="/submit/<%=e.id%>">
-        <div class="prob">
-            <h1><%=e.name%></h1>
-            <h2>Code :<%= e.code %></h2>
+        <h3 class="prob" style="margin-left: 20px">
+            <%=e.name%>
+        </h3>
+        <div class="pcode" style="margin-left: 20px">
+        Code :<%= e.code %>
         </div>
+        <button class="solve-btn">Solve</button>
         </a>
     <% }) %>
 </div>
